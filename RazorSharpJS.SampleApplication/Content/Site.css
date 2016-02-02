@@ -1,0 +1,95 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+
+.spinner {
+    -moz-animation: spin 0.5s linear infinite;
+    -o-animation: spin 0.5s linear infinite;
+    -webkit-animation: spin 0.5s linear infinite;
+    animation: spin 0.5s linear infinite;
+    margin: 100px auto 0;
+    border: 2px solid #1f94ed;
+    border-radius: 50%;
+    position: fixed;
+    z-index: 9999;
+    left: 50%;
+    top: -43px;
+    height: 40px;
+    width: 40px;
+}
+
+    .spinner:after {
+        content: "";
+        width: 85%;
+        height: 85%;
+        background: -webkit-linear-gradient(45deg, white 0%, white 40%, rgba(255, 255, 255, 0.7) 60%, rgba(255, 255, 255, 0) 100%);
+        position: absolute;
+        top: 0;
+        left: 0;
+        -moz-transform: translate(-5%, -5%);
+        -ms-transform: translate(-5%, -5%);
+        -o-transform: translate(-5%, -5%);
+        -webkit-transform: translate(-5%, -5%);
+        transform: translate(-5%, -5%);
+    }
+
+    .spinner.moon {
+        border-left: 0;
+        border-top: 0;
+    }
+
+        .spinner.moon:after {
+            display: none;
+        }
+
+@-moz-keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

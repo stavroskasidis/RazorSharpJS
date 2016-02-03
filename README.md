@@ -5,10 +5,10 @@ Create Single Page Applications (SPA) using ASP.Net MVC and Razor engine views (
 RazorSharpJS is a javascript library that allows you to use ASP MVC controllers and views to create Single Page applications or to easily convert an existing ASP MVC application into one.
 
 # How it works ?
-RazorSharpJS hooks into your page's DOM using javascript, handles anchors and form submits (that you decorate with directives) and converts them to ajax calls.
+RazorSharpJS hooks into your page's DOM using javascript, handles anchors and form submits (that you decorate with directives) and converts them into ajax calls.
 
 # Tutorial
-### Create a main entry point
+### 1. Create a main entry point
 Create a controller that has the action that will be the main entry point of your application. This action will be the **only one** that does not return a partial view.
 
 
@@ -38,7 +38,7 @@ Create a controller that has the action that will be the main entry point of you
         }
     }
   ```
-### Create the main view 
+### 2. Create the main view 
 Create the main view that will serve as a layout for our other views. Notice the `rs-body` directive. This directive instructs RazorSharpJS that the decorated element will be the placeholder for our partial views.
 
 

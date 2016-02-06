@@ -39,7 +39,7 @@ Create a controller that has the action that will be the main entry point of you
     }
   ```
 ### 2. Create the main view 
-Create the main view that will serve as a layout for our other views. Notice the `rs-body` directive. This directive instructs RazorSharpJS that the decorated element will be the placeholder for our views.
+Create the main view that will serve as a layout for our other views and add the script for jquery (prerequisite) and razorsharp.js. Notice the `rs-body` directive. This directive instructs RazorSharpJS that the decorated element will be the placeholder for our views.
 
 
   **Views\ApplicationStart\Main.cshtml**
@@ -161,3 +161,16 @@ public class UsersAdminController : Controller
 {
 ...
 ```
+
+### 7. Client-side events
+You have access to some client side events, so that for example you can show a loading animation.
+
+``` js
+ RazorSharp.Configuration.OnBeforeActionExecuted = function (url, data) {
+     $(".spinner").show();
+ }
+
+ RazorSharp.Configuration.OnAfterActionExecuted = function (ajaxResult) {
+     $(".spinner").hide();
+ }
+ ```

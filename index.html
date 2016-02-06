@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Razorsharpjs by AkiraGTX</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Razorsharpjs</h1>
+      <h2 class="project-tagline">Create Single Page Applications (SPAs) using C# controllers and Razor engine views</h2>
+      <a href="https://github.com/AkiraGTX/RazorSharpJS" class="btn">View on GitHub</a>
+      <a href="https://github.com/AkiraGTX/RazorSharpJS/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/AkiraGTX/RazorSharpJS/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="razorsharpjs---v01-alpha" class="anchor" href="#razorsharpjs---v01-alpha" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>RazorSharpJS - v0.1-alpha</h1>
+
+<p>Create Single Page Applications (SPA) using ASP.Net MVC and Razor engine views (.cshtml)</p>
+
+<h1>
+<a id="description" class="anchor" href="#description" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Description</h1>
+
+<p>RazorSharpJS is a javascript library that allows you to use ASP MVC controllers and views to create Single Page applications or to easily convert an existing ASP MVC application into one.</p>
+
+<h1>
+<a id="how-it-works-" class="anchor" href="#how-it-works-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How it works ?</h1>
+
+<p>RazorSharpJS hooks into your page's DOM using javascript, handles anchors and form submits and converts them into ajax calls.</p>
+
+<h1>
+<a id="tutorial" class="anchor" href="#tutorial" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Tutorial</h1>
+
+<h3>
+<a id="1-create-a-main-entry-point" class="anchor" href="#1-create-a-main-entry-point" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>1. Create a main entry point</h3>
+
+<p>Create a controller that has the action that will be the main entry point of your application. This action will be the <strong>only one</strong> that does not return a partial view.</p>
+
+<p><strong>Controllers\ApplicationStartController.cs</strong></p>
+
+<div class="highlight highlight-source-cs"><pre>  <span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">ApplicationStartController</span> : <span class="pl-k">Controller</span>
+  {
+      <span class="pl-k">public</span> ActionResult <span class="pl-en">Main</span>()
+      {
+          <span class="pl-k">return</span> View();
+      }
+  }</pre></div>
+
+<p><strong>App_Start\RouteConfig.cs</strong></p>
+
+<div class="highlight highlight-source-cs"><pre>  <span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">RouteConfig</span>
+    {
+        <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">void</span> <span class="pl-en">RegisterRoutes</span>(<span class="pl-k">RouteCollection</span> <span class="pl-smi">routes</span>)
+        {
+            routes.IgnoreRoute(<span class="pl-s"><span class="pl-pds">"</span>{resource}.axd/{*pathInfo}<span class="pl-pds">"</span></span>);
+
+            routes.MapRoute(
+                name: <span class="pl-s"><span class="pl-pds">"</span>Default<span class="pl-pds">"</span></span>,
+                url: <span class="pl-s"><span class="pl-pds">"</span>{controller}/{action}/{id}<span class="pl-pds">"</span></span>,
+                defaults: <span class="pl-k">new</span> { controller = <span class="pl-s"><span class="pl-pds">"</span>ApplicationStart<span class="pl-pds">"</span></span>, action = <span class="pl-s"><span class="pl-pds">"</span>Main<span class="pl-pds">"</span></span>, id = UrlParameter.Optional }
+            );
+        }
+    }</pre></div>
+
+<h3>
+<a id="2-create-the-main-view" class="anchor" href="#2-create-the-main-view" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>2. Create the main view</h3>
+
+<p>Create the main view that will serve as a layout for our other views and add the script for jquery (prerequisite) and razorsharp.js. Notice the <code>rs-body</code> directive. This directive instructs RazorSharpJS that the decorated element will be the placeholder for our views.</p>
+
+<p><strong>Views\ApplicationStart\Main.cshtml</strong></p>
+
+<div class="highlight highlight-text-html-basic"><pre>  &lt;<span class="pl-ent">head</span>&gt;
+   @Scripts.Render("~/bundles/jquery") @*jquery is required*@
+<span class="pl-s1">   &lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>~/Scripts/razorsharp.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</span>
+  &lt;/<span class="pl-ent">head</span>&gt;
+  &lt;<span class="pl-ent">body</span>&gt;
+  ...
+  &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>container body-content<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">div</span> <span class="pl-e">rs-body</span>&gt;
+            @Html.Partial("../Home/Index")
+        &lt;/<span class="pl-ent">div</span>&gt;
+  &lt;/<span class="pl-ent">div</span>&gt;
+  ...
+  &lt;/<span class="pl-ent">body</span>&gt;</pre></div>
+
+<h3>
+<a id="3-adding-links-to-navigate-to-your-website" class="anchor" href="#3-adding-links-to-navigate-to-your-website" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>3. Adding links to navigate to your website</h3>
+
+<p>You can now start adding links to your other controllers and views and use the full power and features of ASP MVC, all you have to do is prefix your urls with '/#' (or use the provided extensions) and razorsharp will automatically convert them to Ajax calls to your controllers. Just remember to always return parial views on your other controllers !</p>
+
+<h5>
+<a id="the-html-way" class="anchor" href="#the-html-way" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>The html way</h5>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">a</span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>/#/Home/Index<span class="pl-pds">"</span></span>&gt;Home&lt;/<span class="pl-ent">a</span>&gt;</pre></div>
+
+<h5>
+<a id="the-razor-way-using-the-provided-extensions-recommended" class="anchor" href="#the-razor-way-using-the-provided-extensions-recommended" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>The Razor way, using the provided extensions (recommended)</h5>
+
+<div class="highlight highlight-source-cs"><pre>@Html.RazorSharpActionLink(<span class="pl-s"><span class="pl-pds">"</span>Home<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Index<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Home<span class="pl-pds">"</span></span>)</pre></div>
+
+<h4>
+<a id="31-creating-a-menu" class="anchor" href="#31-creating-a-menu" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>3.1. Creating a menu</h4>
+
+<p><strong>Views\ApplicationStart\Main.cshtml</strong></p>
+
+<div class="highlight highlight-text-html-basic"><pre> ...
+ &lt;<span class="pl-ent">body</span>&gt;
+ ...
+  <span class="pl-c">&lt;!-- LAYOUT MENU --&gt;</span>
+  &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>navbar-collapse collapse<span class="pl-pds">"</span></span>&gt;
+      &lt;<span class="pl-ent">ul</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>nav navbar-nav<span class="pl-pds">"</span></span>&gt;
+          &lt;<span class="pl-ent">li</span>&gt;@Html.RazorSharpActionLink("Home", "Index", "Home")&lt;/<span class="pl-ent">li</span>&gt;@*Or &lt;<span class="pl-ent">a</span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>/#/Home/Index<span class="pl-pds">"</span></span>&gt;Home&lt;/<span class="pl-ent">a</span>&gt;*@
+          &lt;<span class="pl-ent">li</span>&gt;@Html.RazorSharpActionLink("About", "About", "Home")@*Or &lt;<span class="pl-ent">a</span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>/#/Home/About<span class="pl-pds">"</span></span>&gt;About&lt;/<span class="pl-ent">a</span>&gt;*@&lt;/<span class="pl-ent">li</span>&gt;
+          &lt;<span class="pl-ent">li</span>&gt;@Html.RazorSharpActionLink("Contact", "Contact", "Home")@*Or &lt;<span class="pl-ent">a</span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>/#/Home/Contact<span class="pl-pds">"</span></span>&gt;Contact&lt;/<span class="pl-ent">a</span>&gt;*@&lt;/<span class="pl-ent">li</span>&gt;
+      &lt;/<span class="pl-ent">ul</span>&gt;
+      @Html.Partial("_LoginPartial")
+  &lt;/<span class="pl-ent">div</span>&gt;
+   ...</pre></div>
+
+<p><strong>Controllers\HomeController.cs</strong></p>
+
+<div class="highlight highlight-source-cs"><pre> <span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">HomeController</span> : <span class="pl-k">Controller</span>
+ {
+     <span class="pl-k">public</span> ActionResult <span class="pl-en">Index</span>()
+     {
+         <span class="pl-k">return</span> PartialView();
+     }
+
+     <span class="pl-k">public</span> ActionResult <span class="pl-en">About</span>()
+     {
+         <span class="pl-k">return</span> PartialView();
+     }
+
+     <span class="pl-k">public</span> ActionResult <span class="pl-en">Contact</span>()
+     {
+         <span class="pl-k">return</span> PartialView();
+     }
+ }</pre></div>
+
+<h3>
+<a id="4-adding-forms" class="anchor" href="#4-adding-forms" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4. Adding forms</h3>
+
+<p>You can add forms to your application and let razorsharp handle them by decorating them with the <code>rs-form</code> directive.</p>
+
+<h5>
+<a id="the-html-way-1" class="anchor" href="#the-html-way-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>The html way</h5>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">form</span> <span class="pl-e">action</span>=<span class="pl-s"><span class="pl-pds">"</span>/UsersAdmin/Create<span class="pl-pds">"</span></span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>form-horizontal<span class="pl-pds">"</span></span> <span class="pl-e">method</span>=<span class="pl-s"><span class="pl-pds">"</span>post<span class="pl-pds">"</span></span> <span class="pl-e">role</span>=<span class="pl-s"><span class="pl-pds">"</span>form<span class="pl-pds">"</span></span> <span class="pl-e">rs-form</span>&gt;
+...
+&lt;/<span class="pl-ent">form</span>&gt;</pre></div>
+
+<h5>
+<a id="the-razor-way-by-using-the-provided-extensions-recommended" class="anchor" href="#the-razor-way-by-using-the-provided-extensions-recommended" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>The Razor way, by using the provided extensions (recommended)</h5>
+
+<div class="highlight highlight-source-cs"><pre>@using (Html.BeginRazorSharpForm(<span class="pl-s"><span class="pl-pds">"</span>Create<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>UsersAdmin<span class="pl-pds">"</span></span>, FormMethod.Post, <span class="pl-k">new</span> { @<span class="pl-k">class</span> = <span class="pl-s"><span class="pl-pds">"</span>form-horizontal<span class="pl-pds">"</span></span>, role = <span class="pl-s"><span class="pl-pds">"</span>form<span class="pl-pds">"</span></span> }))
+{
+...
+}</pre></div>
+
+<h3>
+<a id="5-redirecting-from-a-controller" class="anchor" href="#5-redirecting-from-a-controller" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>5. Redirecting from a controller</h3>
+
+<p>To redirect to an other action from your controller you will have to use the provided extension methods. </p>
+
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">return</span> RazorSharpRedirect.RedirectToAction(<span class="pl-s"><span class="pl-pds">"</span>Login<span class="pl-pds">"</span></span>);</pre></div>
+
+<h3>
+<a id="6-using-authorization" class="anchor" href="#6-using-authorization" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>6. Using Authorization</h3>
+
+<p>To use the ASP's authorization in combination with razorsharp you will have to use the provided authorization attribute (or use it as the base class if your have custom authorization attributes).</p>
+
+<h5>
+<a id="using-a-default-login-path-and-the-attribute" class="anchor" href="#using-a-default-login-path-and-the-attribute" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Using a default login path and the attribute</h5>
+
+<div class="highlight highlight-source-cs"><pre> <span class="pl-k">public</span> <span class="pl-k">partial</span> <span class="pl-k">class</span> <span class="pl-en">Startup</span>
+ {
+     <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">ConfigureAuth</span>(<span class="pl-k">IAppBuilder</span> <span class="pl-smi">app</span>)
+     {
+         RazorSharpConfiguration.LoginUrl = <span class="pl-s"><span class="pl-pds">"</span>/Account/Login<span class="pl-pds">"</span></span>;
+         ...</pre></div>
+
+<div class="highlight highlight-source-cs"><pre>[RazorSharpAuthorize]
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">UsersAdminController</span> : <span class="pl-k">Controller</span>
+{
+...</pre></div>
+
+<h5>
+<a id="setting-the-login-path-at-the-attribute" class="anchor" href="#setting-the-login-path-at-the-attribute" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Setting the login path at the attribute</h5>
+
+<div class="highlight highlight-source-cs"><pre>[RazorSharpAuthorize(<span class="pl-s"><span class="pl-pds">"</span>/Account/Login<span class="pl-pds">"</span></span>)]
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">UsersAdminController</span> : <span class="pl-k">Controller</span>
+{
+...</pre></div>
+
+<h3>
+<a id="7-client-side-events" class="anchor" href="#7-client-side-events" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>7. Client-side events</h3>
+
+<p>You have access to some client side events, so that for example you can show a loading animation.</p>
+
+<div class="highlight highlight-source-js"><pre> <span class="pl-c1">RazorSharp.Configuration</span>.<span class="pl-en">OnBeforeActionExecuted</span> <span class="pl-k">=</span> <span class="pl-k">function</span> (<span class="pl-smi">url</span>, <span class="pl-smi">data</span>) {
+     <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">"</span>.spinner<span class="pl-pds">"</span></span>).<span class="pl-en">show</span>();
+ }
+
+ <span class="pl-c1">RazorSharp.Configuration</span>.<span class="pl-en">OnAfterActionExecuted</span> <span class="pl-k">=</span> <span class="pl-k">function</span> (<span class="pl-smi">ajaxResult</span>) {
+     <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">"</span>.spinner<span class="pl-pds">"</span></span>).<span class="pl-en">hide</span>();
+ }</pre></div>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/AkiraGTX/RazorSharpJS">Razorsharpjs</a> is maintained by <a href="https://github.com/AkiraGTX">AkiraGTX</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>

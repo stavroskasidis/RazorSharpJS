@@ -43,4 +43,71 @@ Create the main view that will serve as a layout for our other views. Notice the
 
 
   **Views\ApplicationStart\Main.cshtml**
-  
+  ```
+  <head>
+   @Scripts.Render("~/bundles/jquery") @*jquery is required*@
+   <script src="~/Scripts/razorsharp.js"></script>
+  </head>
+  <body>
+  ...
+  <div class="container body-content">
+        <div rs-body>
+            @Html.Partial("../Home/Index")
+        </div>
+  </div>
+  ...
+  </body>
+ ```
+### 3. Adding links to navigate to your website
+ You can now start adding links to your other controllers and views and use the power and features of ASP MVC, all you have to do is prefix your urls with '#' (or use the optional provided extensions) and razorsharp will automatically convert them to Ajax calls to your controllers. Just remember to always return parial views on your other controllers !
+ 
+ 
+#####For example
+```
+<a href="/#/Home/Index">Home</a>
+```
+##### or
+```
+@Html.RazorSharpActionLink("Home", "Index", "Home")
+```
+
+
+ **Views\ApplicationStart\Main.cshtml**
+ ```
+ ...
+ <body>
+ ...
+  <!-- LAYOUT MENU -->
+  <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+          <li>@Html.RazorSharpActionLink("Home", "Index", "Home")</li>@*Or <a href="/#/Home/Index">Home</a>*@
+          <li>@Html.RazorSharpActionLink("About", "About", "Home")@*Or <a href="/#/Home/About">About</a>*@</li>
+          <li>@Html.RazorSharpActionLink("Contact", "Contact", "Home")@*Or <a href="/#/Home/Contact">Contact</a>*@</li>
+      </ul>
+      @Html.Partial("_LoginPartial")
+  </div>
+   ...
+ ```
+ 
+ 
+ 
+ **Controllers\HomeController.cs**
+ ```
+ public class HomeController : Controller
+ {
+     public ActionResult Index()
+     {
+         return PartialView();
+     }
+
+     public ActionResult About()
+     {
+         return PartialView();
+     }
+
+     public ActionResult Contact()
+     {
+         return PartialView();
+     }
+ }
+ ```

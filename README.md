@@ -1,4 +1,4 @@
-# RazorSharpJS - v0.1-alpha
+# RazorSharpJS - v1.0-alpha
 Create Single Page Applications (SPA) using ASP.Net MVC and Razor engine views (.cshtml)
 
 # Description

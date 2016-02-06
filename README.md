@@ -71,7 +71,7 @@ You can now start adding links to your other controllers and views and use the f
 @Html.RazorSharpActionLink("Home", "Index", "Home")
 ```
 
-####3.1 Creating a menu
+####  3.1. Creating a menu
 
  **Views\ApplicationStart\Main.cshtml**
  ``` html
@@ -111,7 +111,7 @@ You can now start adding links to your other controllers and views and use the f
      }
  }
  ```
-### 4 Adding forms
+### 4. Adding forms
 You can add forms to your application and let razorsharp handle them by decorating them with the `rs-form` directive.
 
 ##### The html way
@@ -127,14 +127,14 @@ You can add forms to your application and let razorsharp handle them by decorati
 ...
 }
 ```
-### 5 Redirecting from a controller
+### 5. Redirecting from a controller
 To redirect to an other action from your controller you will have to use the provided extension methods. 
 ``` c#
 return RazorSharpRedirect.RedirectToAction("Login");
 ```
 
-### 6 Using Authorization
-To use the ASP's authorization in combination with razorsharp you need set the login path and you will have to use the provided authorization attribute (or use it as the base class if your have custom authorization attributes)
+### 6. Using Authorization
+To use the ASP's authorization in combination with razorsharp you will have to use the provided authorization attribute (or use it as the base class if your have custom authorization attributes).
 
 
 ##### Using a default login path and the attribute

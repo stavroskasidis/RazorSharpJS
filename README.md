@@ -116,7 +116,7 @@ You can add forms to your application and let razorsharp handle them by decorati
 
 ##### The html way
 ``` html
-<form action="/UsersAdmin/Create" class="form-horizontal" method="post" role="form" **rs-form**>
+<form action="/UsersAdmin/Create" class="form-horizontal" method="post" role="form" rs-form>
 ...
 </form>
 ```
@@ -126,4 +126,38 @@ You can add forms to your application and let razorsharp handle them by decorati
 {
 ...
 }
+```
+### 5 Redirecting from a controller
+To redirect to an other action from your controller you will have to use the provided extension methods. 
+``` c#
+return RazorSharpRedirect.RedirectToAction("Login");
+```
+
+### 6 Using Authorization
+To use the ASP's authorization in combination with razorsharp you need set the login path and you will have to use the provided authorization attribute (or use it as the base class if your have custom authorization attributes)
+
+
+##### Using a default login path and the attribute
+``` c#
+ public partial class Startup
+ {
+     public void ConfigureAuth(IAppBuilder app)
+     {
+         RazorSharpConfiguration.LoginUrl = "/Account/Login";
+         ...
+```
+
+``` c#
+[RazorSharpAuthorize]
+public class UsersAdminController : Controller
+{
+...
+```
+
+##### Setting the login path at the attribute
+``` c#
+[RazorSharpAuthorize("/Account/Login")]
+public class UsersAdminController : Controller
+{
+...
 ```

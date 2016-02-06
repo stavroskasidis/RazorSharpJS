@@ -59,7 +59,7 @@ Create the main view that will serve as a layout for our other views and add the
   </body>
  ```
 ### 3. Adding links to navigate to your website
-You can now start adding links to your other controllers and views and use the full power and features of ASP MVC, all you have to do is prefix your urls with '#' (or use the optional provided extensions) and razorsharp will automatically convert them to Ajax calls to your controllers. Just remember to always return parial views on your other controllers !
+You can now start adding links to your other controllers and views and use the full power and features of ASP MVC, all you have to do is prefix your urls with '/#' (or use the provided extensions) and razorsharp will automatically convert them to Ajax calls to your controllers. Just remember to always return parial views on your other controllers !
  
  
 ##### The html way

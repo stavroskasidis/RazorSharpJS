@@ -19,6 +19,10 @@ namespace RazorSharp
 
         public RazorSharpAuthorizeAttribute()
         {
+            if(RazorSharpConfiguration.LoginUrl == null)
+            {
+                throw new ArgumentException("You must set a login path at the RazorSharpConfiguration.LoginUrl property or use the constructor with the loginUrl argument");
+            }
             this.LoginUrl = this.ConvertUrl(RazorSharpConfiguration.LoginUrl);
         }
 

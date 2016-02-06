@@ -20,6 +20,7 @@
                 </button>
                 @Html.RazorSharpActionLink("Application name", "Main", "ApplicationStart", new { area = "" }, new { @class = "navbar-brand" })
             </div>
+            <!-- MENU -->
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.RazorSharpActionLink("Home", "Index", "Home")</li> @*<a href="/#/Home/Index">Home</a>*@
@@ -41,9 +42,9 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jquery") @*jquery is required*@
     @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryval") 
     <script src="~/Scripts/razorsharp.js"></script>
     <script src="~/Scripts/main.js"></script>
 </body>

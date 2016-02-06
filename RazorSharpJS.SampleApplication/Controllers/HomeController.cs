@@ -16,13 +16,11 @@ namespace SharpJS.Controllers
 
         public ActionResult About()
         {
-
             return PartialView();
         }
 
         public ActionResult Contact()
         {
-
             return PartialView();
         }
     }

@@ -450,11 +450,6 @@ namespace SharpJS.Controllers
         private ActionResult RedirectToLocal(string returnUrl)
         {
             return RazorSharpRedirect.Redirect(returnUrl);
-            //if (Url.IsLocalUrl(returnUrl))
-            //{
-            //    return Redirect(returnUrl);
-            //}
-            //return RazorSharpJS.RedirectToAction("Index", "Home");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

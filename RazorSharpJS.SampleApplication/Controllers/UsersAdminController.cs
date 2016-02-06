@@ -117,7 +117,7 @@ namespace IdentitySample.Controllers
                     return PartialView();
 
                 }
-                return await Index();
+                return RazorSharpRedirect.RedirectToAction("Index");
             }
             ViewBag.RoleId = new SelectList(RoleManager.Roles, "Name", "Name");
             return PartialView();
@@ -188,15 +188,7 @@ namespace IdentitySample.Controllers
                     return PartialView();
                 }
 
-                StringBuilder sb = new StringBuilder();
-                sb.Append("<script type=\"text/javascript\">\n\t");
-                sb.Append("window.location.hash='#/UsersAdmin/Index'");
-                sb.Append("</script>\n");
-//                Response.Write(sb.ToString());
-                return Json(new { rsRedirectTo = "#/UsersAdmin/Index"});
-                //return Content(sb.ToString());
-                //todo
-                //return new PartialViewResult { ViewName = "empty", View = new System.Web.Mvc.Razor.MvcWebPageRazorHost } ;
+                return RazorSharpRedirect.RedirectToAction("Index");
             }
             ModelState.AddModelError("", "Something failed.");
             return PartialView();
@@ -242,7 +234,7 @@ namespace IdentitySample.Controllers
                     ModelState.AddModelError("", result.Errors.First());
                     return PartialView();
                 }
-                return await Index();
+                return RazorSharpRedirect.RedirectToAction("Index");
             }
             return PartialView();
         }

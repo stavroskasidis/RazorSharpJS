@@ -5,18 +5,37 @@ var RazorSharp;
         function ActionExecutor() {
         }
         ActionExecutor.prototype.ExecuteAction = function (url, method, data) {
-            if (RazorSharp.Configuration.OnBeforeActionExecuted != null) {
-                RazorSharp.Configuration.OnBeforeActionExecuted(url, data);
+            if (RazorSharp.Events.OnBeforeActionExecuted != null) {
+                var eventArgs = new RazorSharp.OnBeforeActionExecutedEventArgs(url, method, data);
+                RazorSharp.Events.OnBeforeActionExecuted(eventArgs);
+                if (eventArgs.Cancel) {
+                    return new RazorSharp.ActionResult(null, url, method, data, true);
+                }
             }
-            return $.ajax({
+            var ajaxPromise = $.ajax({
                 url: url,
                 method: method,
                 data: data
             });
+            return new RazorSharp.ActionResult(ajaxPromise, url, method, data, false);
         };
         return ActionExecutor;
     })();
     RazorSharp.ActionExecutor = ActionExecutor;
+})(RazorSharp || (RazorSharp = {}));
+var RazorSharp;
+(function (RazorSharp) {
+    var ActionResult = (function () {
+        function ActionResult(ajaxPromise, url, method, data, canceled) {
+            this.AjaxPromise = ajaxPromise;
+            this.Url = url;
+            this.Method = method;
+            this.Data = data;
+            this.Canceled = canceled;
+        }
+        return ActionResult;
+    })();
+    RazorSharp.ActionResult = ActionResult;
 })(RazorSharp || (RazorSharp = {}));
 var RazorSharp;
 (function (RazorSharp) {
@@ -26,7 +45,10 @@ var RazorSharp;
         }
         ActionResultHandler.prototype.HandleActionResult = function (actionResult) {
             var _this = this;
-            actionResult.always(function (ajaxResult) {
+            if (actionResult.Canceled) {
+                return;
+            }
+            actionResult.AjaxPromise.always(function (ajaxResult) {
                 if (ajaxResult.status && ajaxResult.status == 403 && ajaxResult.responseJSON && ajaxResult.responseJSON.RazorSharpJSLoginUrl) {
                     window.location.hash = ajaxResult.responseJSON.RazorSharpJSLoginUrl;
                 }
@@ -36,8 +58,9 @@ var RazorSharp;
                 else {
                     _this.ViewRenderer.RenderView(ajaxResult);
                 }
-                if (RazorSharp.Configuration.OnAfterActionExecuted != null) {
-                    RazorSharp.Configuration.OnAfterActionExecuted(ajaxResult);
+                if (RazorSharp.Events.OnAfterActionExecuted != null) {
+                    var eventArgs = new RazorSharp.OnAfterActionExecutedEventArgs(actionResult.Url, actionResult.Method, actionResult.Data, ajaxResult);
+                    RazorSharp.Events.OnAfterActionExecuted(eventArgs);
                 }
             });
         };
@@ -72,12 +95,13 @@ var RazorSharp;
 })(RazorSharp || (RazorSharp = {}));
 var RazorSharp;
 (function (RazorSharp) {
-    var Configuration = (function () {
-        function Configuration() {
+    var Events = (function () {
+        function Events() {
         }
-        return Configuration;
+        ;
+        return Events;
     })();
-    RazorSharp.Configuration = Configuration;
+    RazorSharp.Events = Events;
 })(RazorSharp || (RazorSharp = {}));
 /// <reference path="typings/jquery/jquery.d.ts" />
 var RazorSharp;
@@ -125,6 +149,32 @@ $(function () {
     bootstrapper.BindHashChange();
     bootstrapper.BindForms();
 });
+var RazorSharp;
+(function (RazorSharp) {
+    var OnAfterActionExecutedEventArgs = (function () {
+        function OnAfterActionExecutedEventArgs(url, method, data, ajaxResult) {
+            this.Url = url;
+            this.Method = method;
+            this.Data = data;
+            this.AjaxResult = ajaxResult;
+        }
+        return OnAfterActionExecutedEventArgs;
+    })();
+    RazorSharp.OnAfterActionExecutedEventArgs = OnAfterActionExecutedEventArgs;
+})(RazorSharp || (RazorSharp = {}));
+var RazorSharp;
+(function (RazorSharp) {
+    var OnBeforeActionExecutedEventArgs = (function () {
+        function OnBeforeActionExecutedEventArgs(url, method, data) {
+            this.Url = url;
+            this.Method = method;
+            this.Data = data;
+            this.Cancel = false;
+        }
+        return OnBeforeActionExecutedEventArgs;
+    })();
+    RazorSharp.OnBeforeActionExecutedEventArgs = OnBeforeActionExecutedEventArgs;
+})(RazorSharp || (RazorSharp = {}));
 var RazorSharp;
 (function (RazorSharp) {
     var UrlResolver = (function () {

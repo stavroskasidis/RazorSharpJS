@@ -1,18 +1,21 @@
 ﻿namespace RazorSharp {
     export interface IActionResultHandler {
-        HandleActionResult(actionResult: JQueryXHR): void;
+        HandleActionResult(actionResult: ActionResult): void;
     }
 
     export class ActionResultHandler implements IActionResultHandler {
 
         private ViewRenderer: IViewRenderer;
 
-        constructor(viewRenderer: IViewRenderer) {
+        public constructor(viewRenderer: IViewRenderer) {
             this.ViewRenderer = viewRenderer;
         }
 
-        HandleActionResult(actionResult: JQueryXHR): void {
-            actionResult.always((ajaxResult) => {
+        public HandleActionResult(actionResult: ActionResult): void {
+            if (actionResult.Canceled) {
+                return;
+            }
+            actionResult.AjaxPromise.always((ajaxResult) => {
                 if (ajaxResult.status && ajaxResult.status == 403 && ajaxResult.responseJSON && ajaxResult.responseJSON.RazorSharpJSLoginUrl) {
                     window.location.hash = ajaxResult.responseJSON.RazorSharpJSLoginUrl;
                 }
@@ -23,8 +26,9 @@
                     this.ViewRenderer.RenderView(ajaxResult);
                 }
 
-                if (RazorSharp.Configuration.OnAfterActionExecuted != null) {
-                    RazorSharp.Configuration.OnAfterActionExecuted(ajaxResult);
+                if (RazorSharp.Events.OnAfterActionExecuted != null) {
+                    var eventArgs = new OnAfterActionExecutedEventArgs(actionResult.Url, actionResult.Method, actionResult.Data, ajaxResult);
+                    RazorSharp.Events.OnAfterActionExecuted(eventArgs);
                 }
             });
 

@@ -10,13 +10,13 @@ namespace RazorSharp {
         private ActionExecutor: IActionExecutor;
         private ActionResultHandler: IActionResultHandler;
 
-        constructor(urlResolver: IUrlResolver, actionExecutor: IActionExecutor, actionResultHandler: IActionResultHandler) {
+        public constructor(urlResolver: IUrlResolver, actionExecutor: IActionExecutor, actionResultHandler: IActionResultHandler) {
             this.UrlResolver = urlResolver;
             this.ActionExecutor = actionExecutor;
             this.ActionResultHandler = actionResultHandler;
         }
 
-        HandleHashChange(hash: string): void {
+        public HandleHashChange(hash: string): void {
             var url = this.UrlResolver.Resolve(hash);
             var actionResult = this.ActionExecutor.ExecuteAction(url, "GET");
             this.ActionResultHandler.HandleActionResult(actionResult);

@@ -4,7 +4,7 @@
         private FormHandler: IFormHandler;
         private HashHandler: IHashHandler;
 
-        constructor(urlHandler: IHashHandler, formHandler: IFormHandler) {
+        public constructor(urlHandler: IHashHandler, formHandler: IFormHandler) {
             //this.AnchorHandler = anchorHandler;
             this.HashHandler = urlHandler;
             this.FormHandler = formHandler;

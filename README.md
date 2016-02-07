@@ -163,14 +163,14 @@ public class UsersAdminController : Controller
 ```
 
 ### 7. Client-side events
-You have access to some client side events, so that for example you can show a loading animation.
+You have access to some client side events, so that for example you can show a loading animation or prevent an action from executing.
 
 ``` js
- RazorSharp.Configuration.OnBeforeActionExecuted = function (url, data) {
+ RazorSharp.Events.OnBeforeActionExecuted = function (url, data) {
      $(".spinner").show();
  }
 
- RazorSharp.Configuration.OnAfterActionExecuted = function (ajaxResult) {
+ RazorSharp.Events.OnAfterActionExecuted = function (ajaxResult) {
      $(".spinner").hide();
  }
  ```

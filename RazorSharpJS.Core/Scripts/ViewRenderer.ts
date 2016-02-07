@@ -4,8 +4,7 @@
     }
 
     export class ViewRenderer implements IViewRenderer {
-
-        RenderView(viewContent): void {
+        public RenderView(viewContent): void {
             $("[rs-body]").html(viewContent);
         }
     }

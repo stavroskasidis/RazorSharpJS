@@ -9,12 +9,12 @@ namespace RazorSharp {
         private ActionExecutor: IActionExecutor;
         private ActionResultHandler: IActionResultHandler;
 
-        constructor(actionExecutor: IActionExecutor, actionResultHandler: IActionResultHandler) {
+        public constructor(actionExecutor: IActionExecutor, actionResultHandler: IActionResultHandler) {
             this.ActionExecutor = actionExecutor;
             this.ActionResultHandler = actionResultHandler;
         }
 
-        HandleSubmit(form: HTMLFormElement): void {
+        public HandleSubmit(form: HTMLFormElement): void {
             var actionResult = this.ActionExecutor.ExecuteAction(form.action, "POST", $(form).serialize() );
             this.ActionResultHandler.HandleActionResult(actionResult);
         }

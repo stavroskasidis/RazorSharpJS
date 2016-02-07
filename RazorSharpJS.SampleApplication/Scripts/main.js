@@ -1,9 +1,9 @@
 ﻿$(function () {
-    RazorSharp.Configuration.OnBeforeActionExecuted = function (url, data) {
+    RazorSharp.Events.OnBeforeActionExecuted = function (eventArgs) {
         $(".spinner").show();
     }
 
-    RazorSharp.Configuration.OnAfterActionExecuted = function (ajaxResult) {
+    RazorSharp.Events.OnAfterActionExecuted = function (eventArgs) {
         $(".spinner").hide();
     }
 });

@@ -93,13 +93,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Scripts\ActionResult.ts" />
     <TypeScriptCompile Include="Scripts\ActionResultHandler.ts" />
-    <TypeScriptCompile Include="Scripts\Configuration.ts" />
+    <TypeScriptCompile Include="Scripts\Events.ts" />
     <TypeScriptCompile Include="Scripts\HashHandler.ts" />
     <TypeScriptCompile Include="Scripts\FormHandler.ts" />
     <TypeScriptCompile Include="Scripts\ActionExecutor.ts" />
     <TypeScriptCompile Include="Scripts\Bootstrapper.ts" />
     <TypeScriptCompile Include="Scripts\Initialization.ts" />
+    <TypeScriptCompile Include="Scripts\OnAfterActionExecutedEventArgs.ts" />
+    <TypeScriptCompile Include="Scripts\OnBeforeActionExecutedEventArgs.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\UrlResolver.ts" />
     <TypeScriptCompile Include="Scripts\ViewRenderer.ts" />

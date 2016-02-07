@@ -196,13 +196,13 @@
 <h3>
 <a id="7-client-side-events" class="anchor" href="#7-client-side-events" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>7. Client-side events</h3>
 
-<p>You have access to some client side events, so that for example you can show a loading animation.</p>
+<p>You have access to some client side events, so that for example you can show a loading animation or prevent an action from executing.</p>
 
-<div class="highlight highlight-source-js"><pre> <span class="pl-c1">RazorSharp.Configuration</span>.<span class="pl-en">OnBeforeActionExecuted</span> <span class="pl-k">=</span> <span class="pl-k">function</span> (<span class="pl-smi">url</span>, <span class="pl-smi">data</span>) {
+<div class="highlight highlight-source-js"><pre> <span class="pl-c1">RazorSharp.Events</span>.<span class="pl-en">OnBeforeActionExecuted</span> <span class="pl-k">=</span> <span class="pl-k">function</span> (<span class="pl-smi">eventArgs</span>) {
      <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">"</span>.spinner<span class="pl-pds">"</span></span>).<span class="pl-en">show</span>();
  }
 
- <span class="pl-c1">RazorSharp.Configuration</span>.<span class="pl-en">OnAfterActionExecuted</span> <span class="pl-k">=</span> <span class="pl-k">function</span> (<span class="pl-smi">ajaxResult</span>) {
+ <span class="pl-c1">RazorSharp.Events</span>.<span class="pl-en">OnAfterActionExecuted</span> <span class="pl-k">=</span> <span class="pl-k">function</span> (<span class="pl-smi">eventArgs</span>) {
      <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">"</span>.spinner<span class="pl-pds">"</span></span>).<span class="pl-en">hide</span>();
  }</pre></div>
 

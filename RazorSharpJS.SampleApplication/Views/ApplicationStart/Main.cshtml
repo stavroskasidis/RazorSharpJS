@@ -28,7 +28,9 @@
                     <li>@Html.RazorSharpActionLink("About", "About", "Home")@*<a href="/#/Home/About">About</a>*@</li>
                     <li>@Html.RazorSharpActionLink("Contact", "Contact", "Home")@*<a href="/#/Home/Contact">Contact</a>*@</li>
                 </ul>
-                @Html.Partial("_LoginPartial")
+                <div id="MenuLoginPartial" rs-partial="/ApplicationStart/MenuLoginPartial">
+                    @Html.Partial("MenuLoginPartial")
+                </div>
             </div>
         </div>
     </div>

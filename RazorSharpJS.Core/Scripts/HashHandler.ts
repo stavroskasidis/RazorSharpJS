@@ -18,7 +18,7 @@ namespace RazorSharp {
 
         public HandleHashChange(hash: string): void {
             var url = this.UrlResolver.Resolve(hash);
-            var actionResult = this.ActionExecutor.ExecuteAction(url, "GET");
+            var actionResult = this.ActionExecutor.ExecuteAction(url, "GET", false,null);
             this.ActionResultHandler.HandleActionResult(actionResult);
         }
     }

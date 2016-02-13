@@ -100,9 +100,12 @@
     <TypeScriptCompile Include="Scripts\FormHandler.ts" />
     <TypeScriptCompile Include="Scripts\ActionExecutor.ts" />
     <TypeScriptCompile Include="Scripts\Bootstrapper.ts" />
+    <TypeScriptCompile Include="Scripts\HelperFunctions.ts" />
     <TypeScriptCompile Include="Scripts\Initialization.ts" />
     <TypeScriptCompile Include="Scripts\OnAfterActionExecutedEventArgs.ts" />
     <TypeScriptCompile Include="Scripts\OnBeforeActionExecutedEventArgs.ts" />
+    <TypeScriptCompile Include="Scripts\PartialViewHandler.ts" />
+    <TypeScriptCompile Include="Scripts\PartialViewRenderer.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\UrlResolver.ts" />
     <TypeScriptCompile Include="Scripts\ViewRenderer.ts" />

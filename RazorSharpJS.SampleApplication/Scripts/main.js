@@ -5,5 +5,8 @@
 
     RazorSharp.Events.OnAfterActionExecuted = function (eventArgs) {
         $(".spinner").hide();
+        if(eventArgs.Url !== "/ApplicationStart/MenuLoginPartial") {
+            RazorSharp.UpdatePartial("MenuLoginPartial");
+        }
     }
 });

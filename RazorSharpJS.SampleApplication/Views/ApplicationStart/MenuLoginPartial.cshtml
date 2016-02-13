@@ -6,7 +6,7 @@
     @Html.AntiForgeryToken()
 
     <ul class="nav navbar-nav navbar-right">
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        <li><a href="javascript:RazorSharp.SubmitForm(document.getElementById('logoutForm'))">Log off</a></li>
     </ul>
     }
 }

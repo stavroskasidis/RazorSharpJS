@@ -13,5 +13,10 @@ namespace SharpJS.Controllers
         {
             return View();
         }
+
+        public ActionResult MenuLoginPartial()
+        {
+            return PartialView();
+        }
     }
 }

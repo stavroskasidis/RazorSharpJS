@@ -6,9 +6,11 @@
     export class ActionResultHandler implements IActionResultHandler {
 
         private ViewRenderer: IViewRenderer;
+        private PartialViewRenderer: IPartialViewRenderer;
 
-        public constructor(viewRenderer: IViewRenderer) {
+        public constructor(viewRenderer: IViewRenderer, partialViewRenderer: IPartialViewRenderer) {
             this.ViewRenderer = viewRenderer;
+            this.PartialViewRenderer = partialViewRenderer;
         }
 
         public HandleActionResult(actionResult: ActionResult): void {
@@ -22,12 +24,15 @@
                 else if (ajaxResult.RazorSharpJSRedirectTo) {
                     window.location.hash = ajaxResult.RazorSharpJSRedirectTo;
                 }
+                else if (actionResult.IsPartial) {
+                    this.PartialViewRenderer.RenderPartialView(actionResult.PartialViewElement, ajaxResult);
+                }
                 else {
                     this.ViewRenderer.RenderView(ajaxResult);
                 }
 
                 if (RazorSharp.Events.OnAfterActionExecuted != null) {
-                    var eventArgs = new OnAfterActionExecutedEventArgs(actionResult.Url, actionResult.Method, actionResult.Data, ajaxResult);
+                    var eventArgs = new OnAfterActionExecutedEventArgs(actionResult.Url, actionResult.Method, actionResult.Data, ajaxResult, actionResult.IsPartial);
                     RazorSharp.Events.OnAfterActionExecuted(eventArgs);
                 }
             });

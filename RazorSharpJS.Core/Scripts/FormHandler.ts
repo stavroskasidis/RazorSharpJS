@@ -15,7 +15,7 @@ namespace RazorSharp {
         }
 
         public HandleSubmit(form: HTMLFormElement): void {
-            var actionResult = this.ActionExecutor.ExecuteAction(form.action, "POST", $(form).serialize() );
+            var actionResult = this.ActionExecutor.ExecuteAction(form.action, "POST", false, null ,$(form).serialize());
             this.ActionResultHandler.HandleActionResult(actionResult);
         }
     }

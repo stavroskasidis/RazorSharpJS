@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorSharpJS.SampleApplication", "RazorSharpJS.SampleApplication\RazorSharpJS.SampleApplication.csproj", "{6788AF39-295D-4D28-92FB-47D5640FEA20}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorSharpJS", "RazorSharpJS.Core\RazorSharpJS.csproj", "{1203B21A-12EE-4051-A5EA-22418F1645C0}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F3A8BAB3-08D3-4BBF-BD99-F2EAD2DCFA8F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
